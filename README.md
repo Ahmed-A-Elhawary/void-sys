@@ -37,10 +37,9 @@ alias v="nvim"
 
 - .bash_profile
    startx
-
-  # sound card : sof-hda-dsp and alsa and pipwire and pluseaudio
-    try work with alsa and pipwire and learn how to
-    work
+# sound card : sof-hda-dsp and alsa and pipwire and pluseaudio
+  try work with alsa and pipwire and learn how to
+  work
 
 
 
