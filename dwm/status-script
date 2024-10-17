@@ -1,0 +1,46 @@
+#!/bin/bash
+
+red='\033[0;31m'
+clear='\033[0m'
+
+# Function to get battery percentage
+battery() {
+  BATPERC=$(cat /sys/class/power_supply/BAT0/capacity)
+	  echo "BAT: $BATPERC%"
+}
+
+# Function to get free disk space in root (/)
+disk_space() {
+  FREE=$(df -h / | awk 'NR==2 {print $4}')
+  echo "FREE: $FREE"
+}
+
+# Function to get Wi-Fi status using iw (replace 'wlp3s0' with your interface)
+wifi() {
+  SSID=$(iw dev wlp0s20f3 link | grep SSID | awk '{print $2}')
+  if [ -z "$SSID" ]; then
+    echo "WiFi: Disconnected"
+  else
+    echo "WiFi: $SSID"
+  fi
+}
+
+# Function to get current date and time
+clock() {
+  DATE=$(date '+%H:%M %A %d - %m')
+  echo "$DATE"
+}
+
+# Main loop to update status
+while true; do
+  # Left part: Battery, Disk, Wi-Fi
+  rSTATUS="$(battery) | $(disk_space) | $(wifi) | $(clock)"
+  
+  
+  # Send status to dwm using splitstatus
+  xsetroot -name " ;$rSTATUS" 
+  
+  # Update every 5 seconds
+  sleep 5
+done
+
